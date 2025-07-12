@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Category News</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #0d1117;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    nav select {
+      margin-left: 1rem;
+      padding: 0.4rem;
+      border-radius: 5px;
+      border: none;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .news-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .news-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .news-card h4 {
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    .news-card p {
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .loader {
+      text-align: center;
+      padding: 2rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Apana IT News</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <select id="languageSelect">
+      <option value="en">English</option>
+      <option value="hi">Hindi</option>
+    </select>
+  </nav>
+
+  <h2 id="categoryTitle">Loading...</h2>
+  <div id="loader" class="loader">Fetching latest news...</div>
+  <div class="news-list" id="newsList"></div>
+
+  <script>
+    const apiKey = "966f8d089b2b4232b03bbf661ca16965";
+    const queryParams = new URLSearchParams(window.location.search);
+    const category = queryParams.get("name");
+
+    // Set and get selected language
+    const langSelect = document.getElementById("languageSelect");
+    const savedLang = localStorage.getItem("newsLang") || "en";
+    langSelect.value = savedLang;
+
+    langSelect.addEventListener("change", () => {
+      localStorage.setItem("newsLang", langSelect.value);
+      location.reload();
+    });
+
+    const selectedLang = localStorage.getItem("newsLang") || "en";
+
+    document.getElementById("categoryTitle").innerText = `Latest "${category}" News`;
+
+    async function fetchCategoryNews() {
+      const res = await fetch(`https://newsapi.org/v2/everything?q=${category}&language=${selectedLang}&pageSize=12&sortBy=publishedAt&apiKey=${apiKey}`);
+      const data = await res.json();
+      const list = document.getElementById("newsList");
+      document.getElementById("loader").style.display = "none";
+
+      if (!data.articles.length) {
+        list.innerHTML = `<p style="text-align:center;">No articles found for "${category}".</p>`;
+        return;
+      }
+
+      data.articles.forEach((article, index) => {
+        const card = document.createElement("div");
+        card.className = "news-card";
+
+        localStorage.setItem(`article-${index}`, JSON.stringify(article));
+
+        card.innerHTML = `
+          ${article.urlToImage ? `<img src="${article.urlToImage}" alt="${article.title}">` : ""}
+          <h4>${article.title}</h4>
+          <p>${article.description || ""}</p>
+          <a href="article.html?index=${index}" target="_blank">Read full article →</a>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    fetchCategoryNews();
+  </script>
+</body>
+</html>

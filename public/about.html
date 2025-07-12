@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Apana IT News</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+    }
+
+    nav {
+      background-color: #0d1117;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-in-out;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section h3 {
+      margin-top: 0;
+      color: #0d1117;
+    }
+
+    .section p {
+      color: #444;
+      line-height: 1.6;
+    }
+
+    footer {
+      background: #0d1117;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1rem 0;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .footer-links img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .footer-bottom {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 1rem;
+      }
+      .content {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Apana IT News</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <h2 style="text-align:center; margin-bottom:2rem;">About Apana IT News</h2>
+
+    <div class="section">
+      <h3>📱 What is Apana IT News?</h3>
+      <p>Apana IT News is a dynamic news platform delivering the latest updates from the world of technology. Whether you're into gadgets, AI, apps, or startups, we've got you covered with accurate, fast-loading tech news sourced from TechCrunch and beyond.</p>
+    </div>
+
+    <div class="section">
+      <h3>💡 Key Features</h3>
+      <p>✔ Real-time news updates using NewsAPI<br>
+         ✔ Clean, responsive UI<br>
+         ✔ Search by keyword or category (AI, gadgets, startups)<br>
+         ✔ Feedback system to hear from users<br>
+         ✔ Loader effects for smooth user experience
+      </p>
+    </div>
+
+    <div class="section">
+      <h3>🙋‍♂️ Meet the Creator</h3>
+      <p>Hey! I'm <strong>Dheeraj Vaishnav</strong> from Kolhapur, Maharashtra — a passionate 3rd-year BCA student. I love building creative apps and tech projects like this one.  
+        📸 Instagram: <a href="https://instagram.com/quantumsaga-it" target="_blank">@quantumsaga-it</a>  
+        🎥 YouTube: <a href="https://www.youtube.com/@QuantumSaga-IT" target="_blank">@QuantumSaga-IT</a>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <h3>Connect with Me</h3>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/quantumsaga_it/" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"> Instagram
+      </a>
+      <a href="https://github.com/Dheraj7878" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111432.png" alt="GitHub"> GitHub
+      </a>
+      <a href="https://www.youtube.com/@QuantumSaga-IT" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"> YouTube
+      </a>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Apana IT News | Made  ❤️ by Dheeraj Vaishnav
+    </div>
+  </footer>
+
+  <script>
+    // Animate sections on scroll
+    const sections = document.querySelectorAll('.section');
+
+    const revealSections = () => {
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+          sec.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealSections);
+    window.addEventListener('load', revealSections);
+  </script>
+</body>
+</html>

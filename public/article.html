@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Full Article - TechNews</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #0d1117;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav .logo {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .article-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .article-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .article-container h1 {
+      font-size: 2rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .article-container p {
+      line-height: 1.6;
+      margin: 1rem 0;
+      color: #333;
+    }
+
+    .article-container a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Apana IT News</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="article-container" id="articleContainer">
+    Loading article...
+  </div>
+
+  <script>
+    const query = new URLSearchParams(window.location.search);
+    const index = query.get("index");
+
+    const articleData = JSON.parse(localStorage.getItem(`article-${index}`));
+
+    if (articleData) {
+      document.getElementById("articleContainer").innerHTML = `
+        <h1>${articleData.title}</h1>
+        ${articleData.urlToImage ? `<img src="${articleData.urlToImage}" alt="${articleData.title}"/>` : ''}
+        <p><strong>Source:</strong> ${articleData.source.name}</p>
+        <p>${articleData.content || articleData.description || "Full content not available."}</p>
+        <a href="${articleData.url}" target="_blank">Read full original article →</a>
+      `;
+    } else {
+      document.getElementById("articleContainer").innerText = "Article not found.";
+    }
+  </script>
+
+</body>
+</html>
